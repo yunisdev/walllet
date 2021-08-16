@@ -49,11 +49,7 @@ export default function App() {
 
   if (fontsLoaded) return (
     <Provider store={store}>
-      <PersistGate loading={<AppLoading
-        startAsync={getFonts}
-        onFinish={() => { setFontsLoaded(true) }}
-        onError={() => { }}
-      />} persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor}>
         <View style={styles.container}>
           <StatusBar backgroundColor="#29335C" />
           <NavigationContainer>
