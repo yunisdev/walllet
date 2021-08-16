@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableHighlight, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 type ButtonProps = {
-  text: string,
+  text: string | Element,
   style?: any,
   onPress?: any,
   secondary?: boolean

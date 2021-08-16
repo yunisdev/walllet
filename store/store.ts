@@ -5,16 +5,22 @@ import thunk from 'redux-thunk';
 
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage
+  storage: AsyncStorage,
+  whitelist: ['main']
 };
+
+const mainConfig = {
+  key: 'main',
+  storage: AsyncStorage
+}
 
 import mainReducer from './reducer'
 
 const rootReducer = combineReducers({
-  main: persistReducer(persistConfig, mainReducer)
+  main: persistReducer(mainConfig, mainReducer)
 })
 
-const store: Store<any, AnyAction> = createStore(rootReducer, applyMiddleware(thunk))
+const store: Store<any, AnyAction> = createStore(persistReducer(persistConfig, rootReducer), applyMiddleware(thunk))
 const persistor = persistStore(store)
 
 export {

@@ -47,7 +47,7 @@ export default function Wallets() {
       <History.Container>
         {
           transactions.filter(value => value.wallet_id === (activeWallet || "")).map((value, index) => (
-            <History.Item key={index} date={value.date} description={value.description} money={value.amount * (value.type === "income" ? 1 : -1)} />
+            <History.Item key={index} transaction_id={value.id} date={value.date} description={value.description} money={value.amount * (value.type === "income" ? 1 : -1)} />
           ))
         }
       </History.Container>
