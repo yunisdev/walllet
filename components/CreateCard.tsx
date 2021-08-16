@@ -26,11 +26,11 @@ const CreateCard = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 150,
-    width: 230,
+    height: 200,
+    width: 260,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 30,
+    marginRight: 40,
   },
   body: {
     // backgroundColor: "#fff",

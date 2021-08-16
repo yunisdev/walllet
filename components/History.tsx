@@ -4,6 +4,7 @@ import Button from './Button'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch } from 'react-redux';
 import { deleteTransaction } from '../store/actions';
+import DeleteButton from './DeleteButton';
 
 type ContainerProps = {
   children: any
@@ -41,11 +42,7 @@ const Item = ({ transaction_id, description, money, date }: ItemProps) => {
 
       <Text style={[styles.money, money < 0 && styles.minus]}>{moneyText}</Text>
 
-      <TouchableOpacity onPress={handleDelete}>
-        <View style={styles.delete}>
-          <MaterialCommunityIcons name="trash-can" color="white" size={15} />
-        </View>
-      </TouchableOpacity>
+      <DeleteButton handler={handleDelete} />
     </View>
   )
 }
