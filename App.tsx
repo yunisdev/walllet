@@ -10,8 +10,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Wallets from './screens/Wallets'
 import Transaction from './screens/Transaction'
 
-import { store, persistor } from './store/store'
 import { Provider } from 'react-redux';
+import { store, persistor } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 const getFonts = () => Font.loadAsync({
@@ -49,7 +49,11 @@ export default function App() {
 
   if (fontsLoaded) return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<AppLoading
+        startAsync={getFonts}
+        onFinish={() => { setFontsLoaded(true) }}
+        onError={() => { }}
+      />} persistor={persistor}>
         <View style={styles.container}>
           <StatusBar backgroundColor="#29335C" />
           <NavigationContainer>

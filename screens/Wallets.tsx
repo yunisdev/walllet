@@ -8,13 +8,10 @@ import { State } from '../store/types';
 import CreateCard from '../components/CreateCard';
 
 export default function Wallets() {
-  const state = useSelector((state: State) => state)
+  const state: State = useSelector((state: any) => state.main)
   const [balance, setBalance] = useState(0)
 
   const { transactions, activeWallet, wallets } = state
-
-  console.log(transactions)
-  console.log(activeWallet)
 
   useEffect(() => {
     var moneySum = 0
@@ -41,9 +38,9 @@ export default function Wallets() {
           !activeWallet
             ? <Text style={styles.money_desc}>There is not active wallet</Text>
             : (<>
-                <Text style={styles.money_desc}>Balance</Text>
-                <Text style={styles.money_text}>₼{balance.toFixed(2)}</Text>
-              </>)
+              <Text style={styles.money_desc}>Balance</Text>
+              <Text style={styles.money_text}>₼{balance.toFixed(2)}</Text>
+            </>)
         }
 
       </View>

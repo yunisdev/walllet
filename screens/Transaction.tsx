@@ -14,8 +14,9 @@ export default function Transaction() {
   const [description, setDescription] = useState<string>("")
 
   const dispatch = useDispatch()
-  const state: State = useSelector((state: State): State => state)
+  const state: State = useSelector((state: any) => state.main)
 
+  const { transactions, activeWallet, wallets } = state
 
   const handleSubmit = () => {
     var tType: "income" | "expense" = isIncomeSelected ? "income" : "expense"
@@ -27,23 +28,31 @@ export default function Transaction() {
   return (
     <SafeAreaView>
       <Text style={styles.header}>Make Transaction</Text>
-      <View style={styles.tt}>
-        <TransactionType onPress={() => { setIsIncomeSelected(true) }} name="Income" active={isIncomeSelected} />
-        <TransactionType onPress={() => { setIsIncomeSelected(false) }} name="Expense" secondary active={!isIncomeSelected} />
-      </View>
-      <TextInput placeholder="Description..." style={styles.input} onChangeText={setDescription} defaultValue={description} />
-      <CurrencyInput
-        placeholder="Amount of money..." style={styles.input}
-        value={money}
-        onChangeValue={(value) => setMoney(value)}
-        prefix="₼"
-        delimiter=","
-        separator="."
-        precision={2}
-      />
-      <View style={styles.button_container}>
-        <Button onPress={handleSubmit} text="Submit" style={styles.button} />
-      </View>
+      {!activeWallet
+        ? <View style={styles.money_container}><Text style={styles.money_desc}>There is not active wallet</Text></View>
+        :
+        (
+          <>
+            <View style={styles.tt}>
+              <TransactionType onPress={() => { setIsIncomeSelected(true) }} name="Income" active={isIncomeSelected} />
+              <TransactionType onPress={() => { setIsIncomeSelected(false) }} name="Expense" secondary active={!isIncomeSelected} />
+            </View>
+            <TextInput placeholder="Description..." style={styles.input} onChangeText={setDescription} defaultValue={description} />
+            <CurrencyInput
+              placeholder="Amount of money..." style={styles.input}
+              value={money}
+              onChangeValue={(value) => setMoney(value)}
+              prefix="₼"
+              delimiter=","
+              separator="."
+              precision={2}
+            />
+            <View style={styles.button_container}>
+              <Button onPress={handleSubmit} text="Submit" style={styles.button} />
+            </View>
+          </>
+        )}
+
     </SafeAreaView>
   )
 }
@@ -79,5 +88,17 @@ const styles = StyleSheet.create({
   button: {
     width: 150,
     marginTop: 30,
-  }
+  },
+  money_desc: {
+    fontSize: 23,
+    fontFamily: "montserrat",
+    color: "#888"
+  },
+  money_container: {
+    height: 100,
+    width: "100%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 30,
+  },
 })

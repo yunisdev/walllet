@@ -1,16 +1,20 @@
-import { AnyAction, createStore, Store } from "redux";
+import { AnyAction, applyMiddleware, combineReducers, createStore, Store } from "redux";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist';
+import thunk from 'redux-thunk';
 
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage,
-  whitelist:['wallets','transactions']
+  storage: AsyncStorage
 };
 
-import reducer from './reducer'
+import mainReducer from './reducer'
 
-const store: Store<any, AnyAction> = createStore(persistReducer(persistConfig, reducer))
+const rootReducer = combineReducers({
+  main: persistReducer(persistConfig, mainReducer)
+})
+
+const store: Store<any, AnyAction> = createStore(rootReducer, applyMiddleware(thunk))
 const persistor = persistStore(store)
 
 export {
