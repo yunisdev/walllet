@@ -10,6 +10,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Wallets from './screens/Wallets'
 import Transaction from './screens/Transaction'
 
+import store from './store/store'
+import { Provider } from 'react-redux';
+
 const getFonts = () => Font.loadAsync({
   'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
   'montserrat-italic': require('./assets/fonts/Montserrat-Italic.ttf'),
@@ -44,12 +47,14 @@ export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false)
 
   if (fontsLoaded) return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor="#29335C"/>
-      <NavigationContainer>
-        <MyTabs />
-      </NavigationContainer>
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <StatusBar backgroundColor="#29335C" />
+        <NavigationContainer>
+          <MyTabs />
+        </NavigationContainer>
+      </View>
+    </Provider>
   );
 
   else {

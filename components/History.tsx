@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, ScrollView, View, Text,Dimensions } from 'react-native'
+import { StyleSheet, ScrollView, View, Text, Dimensions } from 'react-native'
 
 type ContainerProps = {
   children: any
@@ -8,6 +8,7 @@ type ContainerProps = {
 type ItemProps = {
   money: number,
   description: string,
+  date: Date
 }
 
 const Container = ({ children }: ContainerProps) => (
@@ -16,7 +17,7 @@ const Container = ({ children }: ContainerProps) => (
   </ScrollView>
 )
 
-const Item = ({ description, money }: ItemProps) => {
+const Item = ({ description, money, date }: ItemProps) => {
   let moneyText = `${money < 0 ? "-" : ""} ₼${Math.abs(money).toFixed(2)}`
 
   return (
@@ -26,6 +27,9 @@ const Item = ({ description, money }: ItemProps) => {
           ? `${description}`
           : `${description.substring(0, 21)}...`}
       </Text>
+
+      <Text style={[styles.date]}>{date.getDate()}/{date.getMonth()}/{date.getFullYear()}</Text>
+
       <Text style={[styles.money, money < 0 && styles.minus]}>{moneyText}</Text>
     </View>
   )
@@ -63,5 +67,9 @@ const styles = StyleSheet.create({
   },
   minus: {
     color: "orangered"
+  },
+  date: {
+    fontFamily: 'montserrat-semibold',
+    color: "#999"
   }
 })

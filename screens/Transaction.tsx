@@ -4,15 +4,23 @@ import { RadioButton } from 'react-native-paper';
 import Button from '../components/Button';
 import TransactionType from '../components/TransactionType';
 import CurrencyInput from 'react-native-currency-input';
+import { useSelector, useDispatch } from 'react-redux';
+import { makeTransaction } from '../store/actions';
+import { State } from '../store/types';
 
 export default function Transaction() {
-  const [transactionType, setTransactionType] = useState("income")
-  const [isIncomeSelected, setIsIncomeSelected] = useState(false)
-  const [money, setMoney] = useState(null)
-  const [description, setDescription] = useState("")
+  const [isIncomeSelected, setIsIncomeSelected] = useState<boolean>(false)
+  const [money, setMoney] = useState<null | number>(null)
+  const [description, setDescription] = useState<string>("")
+
+  const dispatch = useDispatch()
+  const state: State = useSelector((state: State): State => state)
+
 
   const handleSubmit = () => {
-    console.log(`You ${isIncomeSelected ? "increased" : "decreased"} budget ${(money || 0) * (isIncomeSelected ? 1 : -1)} for ${description}`)
+    var tType: "income" | "expense" = isIncomeSelected ? "income" : "expense"
+    dispatch(makeTransaction(tType, description, money || 0, state.activeWallet || ""))
+    // console.log(`You ${} budget ${(money || 0) * (isIncomeSelected ? 1 : -1)} for ${description}`)
   }
 
   return (
