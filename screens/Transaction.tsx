@@ -20,7 +20,8 @@ export default function Transaction() {
   const handleSubmit = () => {
     var tType: "income" | "expense" = isIncomeSelected ? "income" : "expense"
     dispatch(makeTransaction(tType, description, money || 0, state.activeWallet || ""))
-    // console.log(`You ${} budget ${(money || 0) * (isIncomeSelected ? 1 : -1)} for ${description}`)
+    setMoney(null)
+    setDescription("")
   }
 
   return (
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    fontFamily: "montserrat"
+    fontFamily: "montserrat",
   },
   button_container: {
     justifyContent: 'center',

@@ -10,8 +10,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Wallets from './screens/Wallets'
 import Transaction from './screens/Transaction'
 
-import store from './store/store'
+import { store, persistor } from './store/store'
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const getFonts = () => Font.loadAsync({
   'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
@@ -48,12 +49,14 @@ export default function App() {
 
   if (fontsLoaded) return (
     <Provider store={store}>
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#29335C" />
-        <NavigationContainer>
-          <MyTabs />
-        </NavigationContainer>
-      </View>
+      <PersistGate loading={null} persistor={persistor}>
+        <View style={styles.container}>
+          <StatusBar backgroundColor="#29335C" />
+          <NavigationContainer>
+            <MyTabs />
+          </NavigationContainer>
+        </View>
+      </PersistGate>
     </Provider>
   );
 

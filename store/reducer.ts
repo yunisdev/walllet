@@ -20,13 +20,13 @@ const reducer = (state: State = initialState, action: Action): State => {
     case types.CREATE_WALLET:
       var wallets = state.wallets
       wallets.push(action.payload)
-      return { ...state, wallets }
+      return { ...state, wallets, activeWallet: action.payload.id }
     case types.DELETE_WALLET:
       var wallets = state.wallets
       wallets = wallets.filter(value => value.id !== action.payload.id)
       return { ...state, wallets }
     case types.CHANGE_ACTIVE_WALLET:
-      return {...state,activeWallet:action.payload.id}
+      return { ...state, activeWallet: action.payload.id }
     default:
       return state
   }

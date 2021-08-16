@@ -11,15 +11,16 @@ export default function Wallets() {
   const state = useSelector((state: State) => state)
   const [balance, setBalance] = useState(0)
 
-  const { transactions, activeWallet } = state
+  const { transactions, activeWallet, wallets } = state
 
   console.log(transactions)
   console.log(activeWallet)
 
   useEffect(() => {
     var moneySum = 0
-    for (var i = 0; i < transactions.length; i++) {
-      moneySum += transactions[i].amount * (transactions[i].type === "income" ? 1 : -1)
+    var ts = transactions.filter(value => value.wallet_id === (activeWallet || ""))
+    for (var i = 0; i < ts.length; i++) {
+      moneySum += ts[i].amount * (ts[i].type === "income" ? 1 : -1)
     }
     setBalance(moneySum)
   }, [state])
@@ -27,14 +28,24 @@ export default function Wallets() {
   return (
     <SafeAreaView style={styles.container}>
       <WalletsContainer>
-        <Card color="mediumpurple" name="Kassa" />
-        <Card color="#29335C" name="Kritibytes" active />
-        <Card color="gold" name="Musiqi" />
+        {
+          wallets.map((value, index) => (
+            <Card key={index} wallet_id={value.id} color="#29335C" name={value.name} active={value.id === activeWallet} />
+          ))
+        }
+
         <CreateCard />
       </WalletsContainer>
       <View style={styles.money_container}>
-        <Text style={styles.money_desc}>Balance</Text>
-        <Text style={styles.money_text}>₼{balance.toFixed(2)}</Text>
+        {
+          !activeWallet
+            ? <Text style={styles.money_desc}>There is not active wallet</Text>
+            : (<>
+                <Text style={styles.money_desc}>Balance</Text>
+                <Text style={styles.money_text}>₼{balance.toFixed(2)}</Text>
+              </>)
+        }
+
       </View>
       <History.Container>
         {
