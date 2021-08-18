@@ -1,17 +1,17 @@
 import { AnyAction, applyMiddleware, combineReducers, createStore, Store } from "redux";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import ExpoFileSystemStorage from 'redux-persist-expo-filesystem';
 import { persistStore, persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage,
+  storage: ExpoFileSystemStorage,
   whitelist: ['main']
 };
 
 const mainConfig = {
   key: 'main',
-  storage: AsyncStorage
+  storage: ExpoFileSystemStorage
 }
 
 import mainReducer from './reducer'
